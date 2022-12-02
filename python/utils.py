@@ -18,9 +18,9 @@ def open_input(day, test:bool=False) -> list:
         list: list of individual lines (strs)
     """
     if test:
-        input_fpath = Path.cwd().parent / 'inputs' / f'{day}_test.txt'
+        input_fpath = Path(__file__).parent.parent / 'inputs' / f'{day}_test.txt'
     else:
-        input_fpath = Path.cwd().parent / 'inputs' / f'{day}_input.txt'
+        input_fpath = Path(__file__).parent.parent / 'inputs' / f'{day}_input.txt'
     with open(input_fpath, 'r') as f:
         lines = f.readlines()
     return lines
