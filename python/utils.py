@@ -23,6 +23,7 @@ def open_input(day, test:bool=False) -> list:
         input_fpath = Path(__file__).parent.parent / 'inputs' / f'{day}_input.txt'
     with open(input_fpath, 'r') as f:
         lines = f.readlines()
+    lines = [line.strip() for line in lines]
     return lines
 
 
