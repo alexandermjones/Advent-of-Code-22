@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-def open_input(day, test:bool=False) -> list:
+def open_input(day, test:bool=False, strip_lines:bool=True) -> list:
     """
     Load input data and convert into a list of strings for each new line.
 
@@ -23,11 +23,16 @@ def open_input(day, test:bool=False) -> list:
         input_fpath = Path(__file__).parent.parent / 'inputs' / f'{day}_input.txt'
     with open(input_fpath, 'r') as f:
         lines = f.readlines()
-    lines = [line.strip() for line in lines]
+    if strip_lines:
+        lines = [line.strip() for line in lines]
     return lines
 
 
-def test_print_part(solution_func: Callable, day: int, part: int, test_answer: Any) -> None:
+def test_print_part(solution_func: Callable,
+                    day: int, 
+                    part: int, 
+                    test_answer: Any,
+                    strip_lines:bool=True) -> None:
     """
     Test and print the solution to an advent of code puzzle.
 
@@ -37,8 +42,8 @@ def test_print_part(solution_func: Callable, day: int, part: int, test_answer: A
         part (int): The part of the puzzle.
         test_answer (Any): The test answer to the puzzle.
     """
-    test_lines = open_input(day, test=True)
-    actual_lines = open_input(day)
+    test_lines = open_input(day, test=True, strip_lines=strip_lines)
+    actual_lines = open_input(day, strip_lines=strip_lines)
     try:
         attempt_test_answer = solution_func(test_lines)
         assert test_answer == attempt_test_answer

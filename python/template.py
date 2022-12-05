@@ -1,6 +1,3 @@
-# Standard library imports
-from pathlib import Path
-
 # Local imports
 import utils
 
