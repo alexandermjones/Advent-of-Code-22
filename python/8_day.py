@@ -11,7 +11,7 @@ class Tree():
     def __init__(self, height):
         self.height = int(height)
         self.visible = False
-        self.scenics = (0,0,0,0)
+        self.scenic = 0
 
 
 def parse_input(lines: list):
@@ -36,6 +36,41 @@ def check_rows(rows: list, cols: list):
             check_visible(tree, col[i+1:])
 
 
+def get_scenic_score(rows, i, j):
+    visible_left = 0
+    for tree in range(j-1, -1, -1):
+        visible_left += 1
+        if rows[i][j].height <= rows[i][tree].height:
+            break
+    visible_right = 0
+    for tree in range(j+1, len(rows[i])):
+        visible_right += 1
+        if rows[i][j].height <= rows[i][tree].height:
+            break
+    visible_top = 0
+    for tree in range(i-1, -1, -1):
+        visible_top += 1
+        if rows[i][j].height <= rows[tree][j].height:
+            break
+    visible_bottom = 0
+    for tree in range(i+1, len(rows)):
+        visible_bottom += 1
+        if rows[i][j].height <= rows[tree][j].height:
+            break
+    scenic_score = visible_left * visible_right * visible_top * visible_bottom
+    return scenic_score
+
+
+def set_scenic_scores(rows: list):
+    for i, row in enumerate(rows):
+        if i == 0 or i == len(rows):
+            continue
+        for j in range(len(row)-1):
+            if j == 0:
+                continue
+            rows[i][j].scenic = get_scenic_score(rows, i, j)
+
+
 def solve_part_one(lines: list):
     rows, cols = parse_input(lines)
     check_rows(rows, cols)
@@ -45,7 +80,10 @@ def solve_part_one(lines: list):
 
 
 def solve_part_two(lines: list):
-    pass
+    rows, _ = parse_input(lines)
+    set_scenic_scores(rows)
+    top_scenic = max([max([tree.scenic for tree in row]) for row in rows])
+    return top_scenic
 
 
 if __name__ == "__main__":

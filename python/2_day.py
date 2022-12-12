@@ -13,6 +13,7 @@ WIN_DICT = {'A': 'Y', 'B': 'Z', 'C': 'X'}
 TIE_DICT = {'A': 'X', 'B': 'Y', 'C': 'Z'}
 LOSE_DICT = {'A': 'Z', 'B': 'X', 'C': 'Y'}
 
+
 def score(round: list):
     if round[1] == 'X':
         score = 1
